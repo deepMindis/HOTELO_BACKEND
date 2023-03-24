@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mysql_1 = __importDefault(require("mysql"));
 const config_1 = __importDefault(require("../config/config"));
-const pool = mysql_1.default.createPool({
+let pool = mysql_1.default.createPool({
     host: config_1.default.post,
     database: config_1.default.database,
     user: config_1.default.user,
@@ -13,6 +13,6 @@ const pool = mysql_1.default.createPool({
     port: parseInt(config_1.default.dbPort, 10),
 });
 pool.on('error', (error) => {
-    console.error(error.message);
+    console.log(error.stack);
 });
 exports.default = pool;

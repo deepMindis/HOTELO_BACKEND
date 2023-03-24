@@ -1,7 +1,7 @@
-import Mysql from 'mysql';
+import mysql2 from "mysql";
 import config from '../config/config';
 
-const pool = Mysql.createPool({
+let pool = mysql2.createPool({
   host: config.post,
   database: config.database,
   user: config.user,
@@ -10,7 +10,8 @@ const pool = Mysql.createPool({
 });
 
 pool.on('error', (error: Error) => {
-  console.error(error.message);
+  console.log(error.stack);
 });
+
 
 export default pool;

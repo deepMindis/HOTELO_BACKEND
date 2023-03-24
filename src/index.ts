@@ -4,25 +4,13 @@ import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
 import config from './config/config';
 import database from './database/index';
-
-console.log(config);
-
+import routes from './routes/api/user.routes';
+import errorMiddleware from './middleware/error.middleware';
 const PORT = config.port || 3000;
-
-// create instant server
 const app: Application = express();
-
-// Middleware to parse Server
-
 app.use(express.json());
-
-// HTTP request logged Middleware
 app.use(morgan('common'));
-
-// HTTP security middleware
 app.use(helmet());
-
-// apply the rate limiting middleware to all request
 app.use(
   rateLimit({
     windowMs: 60 * 60 * 1000, // one Hour
@@ -32,19 +20,28 @@ app.use(
     message: 'Too many request from this IP , please try again after one hour',
   })
 );
+app.use('/api', routes);
 database.getConnection(function (err, connection) {
   try {
     connection.query('SELECT NOW()', (err, result) => {
       if (err) {
         return console.log(err);
       } else {
-        return console.log(result[0]);
+        return console.log(result);
       }
     });
-    connection.release();
-    console.log('m');
+
   } catch (err) {
-    connection.release();
   }
+});
+app.use(errorMiddleware);
+app.use((_req, res) => {
+  res.status(404).json({
+    message: 'The link is not correct',
+  });
+});
+// start express server
+app.listen(PORT, () => {
+  console.log(`server is starting at port :${PORT}`);
 });
 export default app;
