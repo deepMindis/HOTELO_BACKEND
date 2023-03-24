@@ -1,11 +1,15 @@
 import { Router } from 'express';
 import * as controllers from '../../controller/user/user.controller';
-import authenticatedmidddleware from '../../middleware/authenticate.middleware';
-
+import * as rooms from '../../controller/roomType/roomtypr.controller';
 const routes = Router();
 
-// register new user
-routes.post('/users/register', controllers.create);
-// auth users
+// users
+routes.post('/users/register', controllers.register);
+routes.post('/users/authenticated', controllers.authenticated);
+routes.post('/users/forgetPassword', controllers.forgetPasswordcontroller);
 
+// roomType
+routes.get('/roomType/allRoomTypes', rooms.roomTypeRES);
+
+//room
 export default routes;

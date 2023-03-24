@@ -20,41 +20,87 @@ const hashPasswordbycrypt = (password) => {
     return bcrypt_1.default.hashSync(`${password}${config_1.default.pepper}`, salt);
 };
 class UserModel {
-    createUser(u, callback) {
+    createUser(u) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = `INSERT INTO users(
-        ID,firstname, lastname, email, password, confpassword, phone,pertype)
-       VALUES (uuid(),?,?,?,?,?,?,?)`;
-                index_1.default.query(sql, [u.firstname, u.lastname, u.email, hashPasswordbycrypt(u.password), hashPasswordbycrypt(u.confpassword), u.phone, u.pertype], (err, res) => {
-                    if (err) {
-                        return callback(err);
-                    }
-                    else {
-                        return callback(null, res);
-                    }
-                });
+                // open connection
+                const connection = yield index_1.default.connect();
+                const sql = `INSERT INTO public.users(firstname, lastname, email, password, confpassword, phone, pertype)
+          VALUES ($1, $2, $3, $4, $5, $6,$7) returning *`;
+                // run query
+                const result = yield connection.query(sql, [
+                    u.firstname,
+                    u.lastname,
+                    u.email,
+                    hashPasswordbycrypt(u.password),
+                    hashPasswordbycrypt(u.confpassword),
+                    u.phone,
+                    u.pertype,
+                ]);
+                //release connection
+                connection.release();
+                //return created users
+                return result.rows[0];
             }
             catch (error) {
-                throw new Error('Unable to create new users');
+                throw new Error('Unable to create new user');
             }
         });
     }
-    getuser(email, callback) {
+    getusers(u) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = 'SELECT * FROM users WHERE email = ?';
-                index_1.default.query(sql, [email], (err, res) => {
-                    if (err) {
-                        return callback(err);
-                    }
-                    else {
-                        return callback(null, res[0]);
-                    }
-                });
+                const connection = yield index_1.default.connect();
+                const sql = 'SELECT * FROM public.users WHERE email = $1';
+                const result = yield connection.query(sql, [u.email]);
+                connection.release();
+                return result.rows[0];
             }
             catch (error) {
                 throw new Error('the user is already exist');
+            }
+        });
+    }
+    authenticate(email, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield index_1.default.connect();
+                const sql = 'SELECT * FROM users WHERE email = $1';
+                const result = yield connection.query(sql, [email]);
+                if (result.rows.length) {
+                    const { password: hashPasswordbycrypt } = result.rows[0];
+                    const isPasswordVaild = bcrypt_1.default.compareSync(`${password}${config_1.default.pepper}`, hashPasswordbycrypt);
+                    if (isPasswordVaild) {
+                        const userInfo = yield connection.query('SELECT * FROM public.users WHERE email = $1', [email]);
+                        return userInfo.rows[0];
+                    }
+                }
+                connection.release();
+                return null;
+            }
+            catch (error) {
+                throw new Error('No email or password are vaild !!');
+            }
+        });
+    }
+    forgetPassword(u) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const array = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10));
+                let number = array.join('');
+                const connection = yield index_1.default.connect();
+                const sql = 'SELECT * FROM users WHERE email = $1';
+                const result = yield connection.query(sql, [u.email]);
+                if (result.rows.length) {
+                    const action = `UPDATE public.users SET code =${number}  WHERE email = $1 returning code`;
+                    const resultaction = yield connection.query(action, [u.email]);
+                    return resultaction.rows[0];
+                }
+                connection.release();
+                return null;
+            }
+            catch (error) {
+                throw new Error('the error happen while send data to email');
             }
         });
     }

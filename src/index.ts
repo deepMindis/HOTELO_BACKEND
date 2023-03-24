@@ -21,19 +21,25 @@ app.use(
   })
 );
 app.use('/api', routes);
-database.getConnection(function (err, connection) {
-  try {
-    connection.query('SELECT NOW()', (err, result) => {
-      if (err) {
-        return console.log(err);
-      } else {
-        return console.log(result);
-      }
-    });
-
-  } catch (err) {
-  }
-});
+database
+  .connect()
+  .then(
+    (client: {
+      query: (arg0: string) => Promise<any>;
+      release: () => void;
+    }) => {
+      return client
+        .query('SELECT NOW()')
+        .then((res: { rows: any }) => {
+          client.release();
+          console.log(res.rows);
+        })
+        .catch((error: { stack: any }) => {
+          client.release();
+          console.log(error.stack);
+        });
+    }
+  );
 app.use(errorMiddleware);
 app.use((_req, res) => {
   res.status(404).json({

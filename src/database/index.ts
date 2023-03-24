@@ -1,7 +1,7 @@
-import mysql2 from "mysql";
+import { Pool } from "pg";
 import config from '../config/config';
 
-let pool = mysql2.createPool({
+const pool = new Pool({
   host: config.post,
   database: config.database,
   user: config.user,
