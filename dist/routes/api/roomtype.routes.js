@@ -22,13 +22,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const rooms = __importStar(require("../../controller/roomType/roomtypr.controller"));
-const authenticate_middleware_1 = __importDefault(require("../../middleware/authenticate.middleware"));
 const routes = (0, express_1.Router)();
-routes.get('/roomType/allRoomTypes', authenticate_middleware_1.default, rooms.roomTypeRES);
+// roomType
+routes.get('/roomType/allRoomTypes', rooms.roomTypeRES);
 exports.default = routes;

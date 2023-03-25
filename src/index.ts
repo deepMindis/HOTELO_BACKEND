@@ -4,7 +4,8 @@ import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
 import config from './config/config';
 import database from './database/index';
-import routes from './routes/api/user.routes';
+import routesuser from './routes/api/user.routes';
+import routesroomType from './routes/api/roomtype.routes';
 import errorMiddleware from './middleware/error.middleware';
 const PORT = config.port || 3000;
 const app: Application = express();
@@ -20,7 +21,10 @@ app.use(
     message: 'Too many request from this IP , please try again after one hour',
   })
 );
-app.use('/api', routes);
+// user
+app.use('/api', routesuser);
+//room type
+app.use('/api', routesroomType);
 database
   .connect()
   .then(

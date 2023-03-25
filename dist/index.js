@@ -10,6 +10,7 @@ const express_rate_limit_1 = require("express-rate-limit");
 const config_1 = __importDefault(require("./config/config"));
 const index_1 = __importDefault(require("./database/index"));
 const user_routes_1 = __importDefault(require("./routes/api/user.routes"));
+const roomtype_routes_1 = __importDefault(require("./routes/api/roomtype.routes"));
 const error_middleware_1 = __importDefault(require("./middleware/error.middleware"));
 const PORT = config_1.default.port || 3000;
 const app = (0, express_1.default)();
@@ -23,7 +24,10 @@ app.use((0, express_rate_limit_1.rateLimit)({
     legacyHeaders: false,
     message: 'Too many request from this IP , please try again after one hour',
 }));
+// user
 app.use('/api', user_routes_1.default);
+//room type
+app.use('/api', roomtype_routes_1.default);
 index_1.default
     .connect()
     .then((client) => {
