@@ -6,6 +6,7 @@ import config from './config/config';
 import database from './database/index';
 import routesuser from './routes/api/user.routes';
 import routesroomType from './routes/api/roomtype.routes';
+import routesroom from './routes/api/room.routes';
 import errorMiddleware from './middleware/error.middleware';
 const PORT = config.port || 3000;
 const app: Application = express();
@@ -25,6 +26,8 @@ app.use(
 app.use('/api', routesuser);
 //room type
 app.use('/api', routesroomType);
+//room 
+app.use('/api', routesroom);
 database
   .connect()
   .then(
