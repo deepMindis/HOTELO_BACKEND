@@ -5,7 +5,7 @@ class RoomModel {
         try {
             const connection = await pool.connect();
             const sql = 'SELECT  * FROM public.room WHERE ("roomtypeID") = $1';
-            const result = await connection.query(sql, [r.room_typeID]);
+            const result = await connection.query(sql, [r.roomtypeID]);
             connection.release();
             return result.rows;
         } catch (error) {

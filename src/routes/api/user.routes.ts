@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as controllers from '../../controller/user/user.controller';
+import $ from 'jquery';
 
 const routes = Router();
 

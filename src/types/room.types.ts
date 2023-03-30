@@ -1,11 +1,10 @@
 type room = {
     roomnumber?: number;
-    roomcheckin?: Date;
-    roomcheckout?: Date;
     petfrindly?: number;
     smokefrindly?: number;
     roomdescripe?: string;
-    booking_id?: number;
-    room_typeID?: number;
+    roomtypeID?: number;
+    roomcoast?: number;
+    roomstate?: number;
 };
 export default room;
