@@ -7,6 +7,7 @@ import database from './database/index';
 import routesuser from './routes/api/user.routes';
 import routesroomType from './routes/api/roomtype.routes';
 import routesroom from './routes/api/room.routes';
+import routesBooking from './routes/api/booking.routes';
 import errorMiddleware from './middleware/error.middleware';
 const PORT = config.port || 3000;
 const app: Application = express();
@@ -28,6 +29,8 @@ app.use('/api', routesuser);
 app.use('/api', routesroomType);
 //room 
 app.use('/api', routesroom);
+//booking
+app.use('/api', routesBooking);
 database
   .connect()
   .then(

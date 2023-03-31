@@ -12,21 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __importDefault(require("../../database/index"));
-class RoomModel {
-    getRooms(r) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const connection = yield index_1.default.connect();
-                const sql = 'SELECT  * FROM public.room WHERE ("roomtypeID") = $1';
-                const result = yield connection.query(sql, [r.roomtypeID]);
-                connection.release();
-                return result.rows;
-            }
-            catch (error) {
-                throw new Error('Error while featching data');
-            }
+exports.booking = void 0;
+const booking_model_1 = __importDefault(require("../../model/booking/booking.model"));
+const bookingModel = new booking_model_1.default();
+const booking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const boking = yield bookingModel.bookingRoom(req.body);
+        res.json({
+            success: 0,
+            data: Object.assign({}, boking),
+            message: 'Booking data correct',
         });
     }
-}
-exports.default = RoomModel;
+    catch (error) {
+        next(error);
+    }
+});
+exports.booking = booking;

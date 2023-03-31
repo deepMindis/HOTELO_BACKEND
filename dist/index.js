@@ -12,6 +12,7 @@ const index_1 = __importDefault(require("./database/index"));
 const user_routes_1 = __importDefault(require("./routes/api/user.routes"));
 const roomtype_routes_1 = __importDefault(require("./routes/api/roomtype.routes"));
 const room_routes_1 = __importDefault(require("./routes/api/room.routes"));
+const booking_routes_1 = __importDefault(require("./routes/api/booking.routes"));
 const error_middleware_1 = __importDefault(require("./middleware/error.middleware"));
 const PORT = config_1.default.port || 3000;
 const app = (0, express_1.default)();
@@ -31,6 +32,8 @@ app.use('/api', user_routes_1.default);
 app.use('/api', roomtype_routes_1.default);
 //room 
 app.use('/api', room_routes_1.default);
+//booking
+app.use('/api', booking_routes_1.default);
 index_1.default
     .connect()
     .then((client) => {

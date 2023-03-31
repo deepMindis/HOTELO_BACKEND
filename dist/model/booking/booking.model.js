@@ -13,20 +13,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = __importDefault(require("../../database/index"));
-class RoomModel {
-    getRooms(r) {
+class BookingRoom {
+    bookingRoom(b) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
-                const sql = 'SELECT  * FROM public.room WHERE ("roomtypeID") = $1';
-                const result = yield connection.query(sql, [r.roomtypeID]);
+                const sql = `INSERT INTO public.booking( bookingcheckin, bookingcheckout, total, numberadult, numberchild, paymenttype, "userID", "roomID", "numberofRoom") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+                const result = yield connection.query(sql, [
+                    b.bookingcheckin,
+                    b.bookingcheckout,
+                    b.total,
+                    b.numberadult,
+                    b.numberchild,
+                    b.paymenttype,
+                    b.userID,
+                    b.roomID,
+                    b.numberofRoom
+                ]);
                 connection.release();
-                return result.rows;
+                return result.rows[0];
             }
             catch (error) {
-                throw new Error('Error while featching data');
+                throw new Error('Error in server please try later !');
             }
         });
     }
 }
-exports.default = RoomModel;
+exports.default = BookingRoom;
