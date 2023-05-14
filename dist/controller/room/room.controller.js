@@ -19,8 +19,8 @@ const getRoomsByID = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     try {
         const room = yield roomModel.getRooms(req.body);
         res.json({
-            success: 0,
-            data: Object.assign({}, room),
+            status: 0,
+            data: room,
             message: "data fetch correct"
         });
     }

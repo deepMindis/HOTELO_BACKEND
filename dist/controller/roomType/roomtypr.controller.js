@@ -19,8 +19,8 @@ const roomTypeRES = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     try {
         const roomType = yield roomtype.getRoomType();
         res.json({
-            success: 0,
-            data: Object.assign({}, roomType),
+            status: 0,
+            data: roomType,
             message: "All Room types",
         });
     }

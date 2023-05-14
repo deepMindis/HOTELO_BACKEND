@@ -25,17 +25,15 @@ class UserModel {
             try {
                 // open connection
                 const connection = yield index_1.default.connect();
-                const sql = `INSERT INTO public.users(firstname, lastname, email, password, confpassword, phone, pertype)
-          VALUES ($1, $2, $3, $4, $5, $6,$7) returning *`;
+                const sql = `INSERT INTO public.users(firstname, lastname, email, password, phone)
+          VALUES ($1,$2, $3, $4,  $5) returning *`;
                 // run query
                 const result = yield connection.query(sql, [
                     u.firstname,
                     u.lastname,
                     u.email,
                     hashPasswordbycrypt(u.password),
-                    hashPasswordbycrypt(u.confpassword),
                     u.phone,
-                    u.pertype,
                 ]);
                 //release connection
                 connection.release();

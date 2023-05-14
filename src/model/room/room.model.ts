@@ -4,7 +4,7 @@ class RoomModel {
     async getRooms(r: Room): Promise<Room[]> {
         try {
             const connection = await pool.connect();
-            const sql = 'SELECT  * FROM public.room WHERE ("roomtypeID") = $1';
+            const sql = 'SELECT * FROM PUBLIC.room WHERE roomtypeid = $1';
             const result = await connection.query(sql, [r.roomtypeID]);
             connection.release();
             return result.rows;

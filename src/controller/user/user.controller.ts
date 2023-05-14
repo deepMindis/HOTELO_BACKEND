@@ -14,13 +14,13 @@ export const register = async (
     const superfund = await userModel.getusers(req.body);
     if (superfund) {
       res.json({
-        success: 1,
+        status: 1,
         message: 'the user is already exist',
       });
     } else {
       const user = await userModel.createUser(req.body);
       res.json({
-        success: 0,
+        status: 0,
         data: { ...user },
         message: 'user created successfully',
       });
@@ -38,7 +38,7 @@ export const getUser = async (
   try {
     const user = await userModel.getusers(req.body);
     res.json({
-      success: 0,
+      status: 0,
       data: { ...user },
       message: 'user is exist',
     });
@@ -56,13 +56,13 @@ export const forgetPasswordcontroller = async (
     if (superfund) {
       const user = await userModel.forgetPassword(req.body);
       res.json({
-        success: 0,
+        status: 0,
         data: { ...user },
         message: 'the code is set for your account',
       });
     } else {
       res.json({
-        success: 1,
+        status: 1,
         message: `the nothing email like that ${req.body.email}`,
       })
     }
@@ -82,12 +82,12 @@ export const authenticated = async (
     const token = jwt.sign({ user }, config.token as unknown as string);
     if (!user) {
       return res.status(401).json({
-        success: 1,
+        status: 1,
         message: 'the email or password do not match please try again',
       });
     }
     return res.header('Access-Control-Allow-Origin', req.headers.origin).json({
-      success: 0,
+      status: 0,
       data: { ...user, token },
       message: 'user authenticated successfully',
     });

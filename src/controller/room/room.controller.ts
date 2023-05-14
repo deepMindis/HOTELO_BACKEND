@@ -9,8 +9,8 @@ export const getRoomsByID = async (
     try {
         const room = await roomModel.getRooms(req.body);
         res.json({
-            success: 0,
-            data: { ...room },
+            status: 0,
+            data: room,
             message: "data fetch correct"
         })
     } catch (error) {

@@ -9,8 +9,8 @@ export const roomTypeRES = async (
     try {
         const roomType = await roomtype.getRoomType();
         res.json({
-            success: 0,
-            data: { ...roomType },
+            status: 0,
+            data: roomType,
             message: "All Room types",
         });
     } catch (error) {

@@ -4,9 +4,8 @@ type booking = {
     total?: number;
     numberadult?: number;
     numberchild?: number;
-    paymenttype?: string;
+    paymenttype?: number;
     userID?: string;
     roomID?: string;
-    numberofRoom?: number;
 };
 export default booking;
