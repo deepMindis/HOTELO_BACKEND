@@ -1,7 +1,7 @@
 type room = {
     roomnumber?: number;
     petfrindly?: number;
-    smokefrindly?: number;
+    smokefrindly?: string;
     roomdescripe?: string;
     roomtypeID?: number;
     roomcoast?: number;
