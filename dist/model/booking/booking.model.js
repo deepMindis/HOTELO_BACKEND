@@ -18,7 +18,7 @@ class BookingRoom {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
-                const sql = `INSERT INTO public.booking( bookingcheckin, bookingcheckout, total, numberadult, numberchild, paymenttype, userID, roomID) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning *`;
+                const sql = `INSERT INTO public.booking( bookingcheckin, bookingcheckout, total, numberadult, numberchild, paymenttype, userID) VALUES ($1, $2, $3, $4, $5, $6, $7) returning *`;
                 const result = yield connection.query(sql, [
                     b.bookingcheckin,
                     b.bookingcheckout,
@@ -27,27 +27,26 @@ class BookingRoom {
                     b.numberchild,
                     b.paymenttype,
                     b.userID,
-                    b.roomID,
                 ]);
                 connection.release();
                 return result.rows[0];
             }
             catch (error) {
-                throw new Error('Error in server please try later !');
+                throw new Error('Error while booking please try again !!');
             }
         });
     }
-    getUser(b) {
+    updateDat(b) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
-                const sql = 'SELECT * FROM public.booking WHERE userID = $7 AND roomID = $8';
-                const result = yield connection.query(sql, [b.userID, b.roomID]);
+                const sql = `UPDATE public.cell SET  status = 1 WHERE public.cell.user_id = $1`;
+                const result = yield connection.query(sql, [b.userID]);
                 connection.release();
-                return result.rows[0];
+                return result.rows;
             }
             catch (error) {
-                throw new Error("The user is already booking this Room");
+                throw new Error("Data not update correct");
             }
         });
     }

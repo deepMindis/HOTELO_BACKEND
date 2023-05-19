@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletefromCell = exports.getCellData = exports.cellController = void 0;
+exports.gettotalPrice = exports.deletefromCell = exports.getCellData = exports.cellController = void 0;
 const cell_model_1 = __importDefault(require("../../model/cell/cell.model"));
 const cellModel = new cell_model_1.default();
 const cellController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -57,3 +57,17 @@ const deletefromCell = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.deletefromCell = deletefromCell;
+const gettotalPrice = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const prices = yield cellModel.getTotalPrice(req.body);
+        res.json({
+            status: 0,
+            data: prices,
+            message: "you can pay part of money !",
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.gettotalPrice = gettotalPrice;

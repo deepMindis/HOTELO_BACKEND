@@ -35,7 +35,7 @@ class Cell {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
-                const sql = 'SELECT * FROM public.room INNER JOIN public.cell ON public.cell.room_id = public.room.id WHERE public.cell.user_id = $1';
+                const sql = 'SELECT * FROM public.room INNER JOIN public.cell ON public.cell.room_id = public.room.id WHERE public.cell.user_id = $1 AND public.cell.status = 0';
                 const result = yield connection.query(sql, [r.user_id]);
                 connection.release();
                 return result.rows;
@@ -56,6 +56,20 @@ class Cell {
             }
             catch (error) {
                 throw new Error('Error while remove from cell');
+            }
+        });
+    }
+    getTotalPrice(r) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield index_1.default.connect();
+                const sql = `SELECT SUM(roomcoast) as Total FROM public.room INNER JOIN public.cell ON public.cell.room_id = public.room.id WHERE public.cell.user_id = $1`;
+                const result = yield connection.query(sql, [r.user_id]);
+                connection.release();
+                return result.rows;
+            }
+            catch (error) {
+                throw new Error("Error while fetching data !");
             }
         });
     }

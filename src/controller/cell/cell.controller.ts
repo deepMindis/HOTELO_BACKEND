@@ -53,3 +53,19 @@ export const deletefromCell = async (
         next(error);
     }
 }
+export const gettotalPrice = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const prices = await cellModel.getTotalPrice(req.body);
+        res.json({
+            status: 0,
+            data: prices,
+            message: "you can pay part of money !",
+        });
+    } catch (error) {
+        next(error);
+    }
+}

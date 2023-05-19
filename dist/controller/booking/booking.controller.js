@@ -18,11 +18,21 @@ const bookingModel = new booking_model_1.default();
 const booking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const boking = yield bookingModel.bookingRoom(req.body);
-        res.json({
-            status: 0,
-            data: Object.assign({}, boking),
-            message: 'Booking correct !',
-        });
+        if (boking) {
+            const update = yield bookingModel.updateDat(req.body);
+            res.json({
+                status: 0,
+                data: Object.assign({}, boking),
+                message: 'Booking correct !',
+            });
+        }
+        else {
+            res.json({
+                status: 2,
+                data: "something error",
+                message: 'Booking correct !',
+            });
+        }
     }
     catch (error) {
         next(error);

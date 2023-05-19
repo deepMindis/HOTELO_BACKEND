@@ -6,6 +6,5 @@ type booking = {
     numberchild?: number;
     paymenttype?: number;
     userID?: string;
-    roomID?: string;
 };
 export default booking;

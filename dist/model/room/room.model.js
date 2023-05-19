@@ -18,7 +18,7 @@ class RoomModel {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
-                const sql = 'SELECT * FROM PUBLIC.room WHERE roomtypeid = $1';
+                const sql = 'SELECT * FROM PUBLIC.room WHERE roomtypeid = $1 AND roomstate = 0';
                 const result = yield connection.query(sql, [r.roomtypeID]);
                 connection.release();
                 return result.rows;
