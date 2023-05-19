@@ -10,9 +10,9 @@ export const booking = async (
     try {
         const boking = await bookingModel.bookingRoom(req.body);
         res.json({
-            success: 0,
+            status: 0,
             data: { ...boking },
-            message: 'Booking data correct',
+            message: 'Booking correct !',
         });
     } catch (error) {
         next(error);

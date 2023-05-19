@@ -1,6 +1,5 @@
 import Booking from '../../types/booking.types';
 import pool from '../../database/index';
-import { booking } from '../../controller/booking/booking.controller';
 
 class BookingRoom {
     async bookingRoom(b: Booking): Promise<Booking> {

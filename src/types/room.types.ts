@@ -1,4 +1,5 @@
 type room = {
+    id?: number;
     roomnumber?: number;
     petfrindly?: number;
     smokefrindly?: string;
@@ -6,5 +7,6 @@ type room = {
     roomtypeID?: number;
     roomcoast?: number;
     roomstate?: number;
+    user_id?: string
 };
 export default room;

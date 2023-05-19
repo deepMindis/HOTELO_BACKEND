@@ -19,9 +19,9 @@ const booking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const boking = yield bookingModel.bookingRoom(req.body);
         res.json({
-            success: 0,
+            status: 0,
             data: Object.assign({}, boking),
-            message: 'Booking data correct',
+            message: 'Booking correct !',
         });
     }
     catch (error) {

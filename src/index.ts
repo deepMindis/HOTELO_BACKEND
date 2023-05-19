@@ -9,7 +9,10 @@ import routesroomType from './routes/api/roomtype.routes';
 import routesroom from './routes/api/room.routes';
 import routesBooking from './routes/api/booking.routes';
 import routesServices from './routes/api/services.routes';
+import cellServices from './routes/api/cell.routes';
 import errorMiddleware from './middleware/error.middleware';
+
+
 const PORT = config.port || 3000;
 const app: Application = express();
 app.use(express.json());
@@ -34,6 +37,8 @@ app.use('/api', routesroom);
 app.use('/api', routesBooking);
 // services
 app.use('/api', routesServices);
+// cell
+app.use('/api', cellServices);
 database
   .connect()
   .then(
