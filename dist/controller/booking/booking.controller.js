@@ -12,14 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.booking = void 0;
+exports.fetchData = exports.booking = void 0;
 const booking_model_1 = __importDefault(require("../../model/booking/booking.model"));
 const bookingModel = new booking_model_1.default();
 const booking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const boking = yield bookingModel.bookingRoom(req.body);
         if (boking) {
-            const update = yield bookingModel.updateDat(req.body);
+            const update = yield bookingModel.updateDataCell(req.body);
             res.json({
                 status: 0,
                 data: Object.assign({}, boking),
@@ -39,3 +39,17 @@ const booking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.booking = booking;
+const fetchData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const fetch = yield bookingModel.getRoomCell(req.body);
+        res.json({
+            status: 0,
+            data: fetch,
+            message: 'correct !',
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.fetchData = fetchData;

@@ -1,5 +1,6 @@
 import Booking from '../../types/booking.types';
 import pool from '../../database/index';
+import booking from '../../types/booking.types';
 
 
 class BookingRoom {
@@ -22,7 +23,7 @@ class BookingRoom {
             throw new Error('Error while booking please try again !!');
         }
     }
-    async updateDat(b: Booking): Promise<Booking[]> {
+    async updateDataCell(b: Booking): Promise<Booking[]> {
         try {
             const connection = await pool.connect();
             const sql = `UPDATE public.cell SET  status = 1 WHERE public.cell.user_id = $1`;
@@ -33,6 +34,19 @@ class BookingRoom {
             throw new Error("Data not update correct");
         }
     }
+    async getRoomCell(b: booking): Promise<Booking[]> {
+        try {
+            const connection = await pool.connect();
+            const sql = `SELECT public.cell.room_id FROM public.cell WHERE public.cell.user_id = $1`;
+            const result = await connection.query(sql, [b.userID]);
+            connection.release();
+            return result.rows;
+        } catch (error) {
+            throw new Error("Error while Fetching Data");
+        }
+    }
+
+
 }
 
 export default BookingRoom;

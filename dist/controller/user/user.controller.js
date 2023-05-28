@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticated = exports.forgetPasswordcontroller = exports.getUser = exports.register = void 0;
+exports.authenticated = exports.forgetPasswordcontroller = exports.getUser = exports.updetUserData = exports.register = void 0;
 const user_model_1 = __importDefault(require("../../model/user/user.model"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../../config/config"));
@@ -40,6 +40,29 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.register = register;
+const updetUserData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const check = yield userModel.getusers(req.body);
+        if (check) {
+            res.json({
+                status: 1,
+                message: "The email is already exist",
+            });
+        }
+        else {
+            const updataData = yield userModel.updateUser(req.body);
+            res.json({
+                status: 0,
+                data: Object.assign({}, updataData),
+                message: "Update data Successfuly"
+            });
+        }
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.updetUserData = updetUserData;
 const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield userModel.getusers(req.body);

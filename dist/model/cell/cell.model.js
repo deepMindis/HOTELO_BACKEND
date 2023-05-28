@@ -18,7 +18,7 @@ class Cell {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
-                const sql = `INSERT INTO public.cell(user_id, room_id) VALUES($1, $2) returning *`;
+                const sql = `INSERT INTO public.cell(user_id, room_id) VALUES($1, $2)  returning *`;
                 const result = yield connection.query(sql, [
                     c.user_id,
                     c.room_id,
@@ -31,6 +31,20 @@ class Cell {
             }
         });
     }
+    roomAtCell(r) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield index_1.default.connect();
+                const sql = "SELECT * FROM PUBLIC.cell WHERE public.cell.user_id = $1 AND public.cell.room_id = $2";
+                const result = yield connection.query(sql, [r.user_id, r.room_id]);
+                connection.release();
+                return result.rows[0];
+            }
+            catch (error) {
+                throw new Error('The room already Booking !!');
+            }
+        });
+    }
     getAllCell(r) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -38,7 +52,12 @@ class Cell {
                 const sql = 'SELECT * FROM public.room INNER JOIN public.cell ON public.cell.room_id = public.room.id WHERE public.cell.user_id = $1 AND public.cell.status = 0';
                 const result = yield connection.query(sql, [r.user_id]);
                 connection.release();
-                return result.rows;
+                if (result == null) {
+                    return null;
+                }
+                else {
+                    return result.rows;
+                }
             }
             catch (error) {
                 throw new Error('Error while featching data');
@@ -49,8 +68,8 @@ class Cell {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
-                const sql = 'DELETE FROM public.cell WHERE public.cell.id = $1';
-                const result = yield connection.query(sql, [r.id]);
+                const sql = 'DELETE FROM public.cell WHERE public.cell.user_id = $1 ABD public.cell.room_id = $2';
+                const result = yield connection.query(sql, [r.user_id, r.room_id]);
                 connection.release();
                 return result.rows;
             }

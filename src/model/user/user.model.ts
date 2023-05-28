@@ -87,6 +87,18 @@ class UserModel {
       throw new Error('the error happen while send data to email');
     }
   }
+
+  async updateUser(u: User): Promise<User> {
+    try {
+      const connection = await pool.connect();
+      const sql = 'UPDATE public.users SET firstname=$1, lastname=$2, email=$3, phone=$4 WHERE id = $5 returning * ';
+      const result = await connection.query(sql, [u.firstname, u.lastname, u.email, u.phone, u.id,]);
+      connection.release();
+      return result.rows[0];
+    } catch (error) {
+      throw new Error("You have an error while updating data !!");
+    }
+  }
 }
 
 export default UserModel;

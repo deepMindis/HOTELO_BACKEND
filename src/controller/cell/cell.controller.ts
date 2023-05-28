@@ -9,12 +9,19 @@ export const cellController = async (
     next: NextFunction
 ) => {
     try {
-        const cell = await cellModel.addNewRoom(req.body);
-        res.json({
-            status: 0,
-            data: { ...cell },
-            message: "Cell add correct ",
-        });
+        const str = await cellModel.roomAtCell(req.body);
+        if (str) {
+            res.json({
+                status: 1,
+                message: "Room Already in cell with you"
+            })
+        } else {
+            const cell = await cellModel.addNewRoom(req.body);
+            res.json({
+                status: 0,
+                message: "Cell add correct ",
+            });
+        }
     } catch (error) {
         next(error);
     }
@@ -27,11 +34,19 @@ export const getCellData = async (
 ) => {
     try {
         const cell = await cellModel.getAllCell(req.body);
-        res.json({
-            status: 0,
-            data: cell,
-            message: "Cell fetch correct ",
-        });
+        if (cell == null) {
+            res.json({
+                status: 1,
+                data: cell,
+                message: "Not room in the Cell",
+            });
+        } else {
+            res.json({
+                status: 0,
+                data: cell,
+                message: "Cell fetch correct ",
+            });
+        }
     } catch (error) {
         next(error);
     }
@@ -43,12 +58,14 @@ export const deletefromCell = async (
     next: NextFunction
 ) => {
     try {
+
         const cell = await cellModel.deleteCell(req.body);
         res.json({
             status: 0,
             data: cell,
             message: "data remove correct !",
         });
+
     } catch (error) {
         next(error);
     }

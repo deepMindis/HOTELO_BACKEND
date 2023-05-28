@@ -27,4 +27,5 @@ const express_1 = require("express");
 const booking = __importStar(require("../../controller/booking/booking.controller"));
 const routes = (0, express_1.Router)();
 routes.post('/booking/roombooking', booking.booking);
+routes.post('/booking/fetchdata', booking.fetchData);
 exports.default = routes;

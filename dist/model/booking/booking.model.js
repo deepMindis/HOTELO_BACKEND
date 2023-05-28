@@ -36,7 +36,7 @@ class BookingRoom {
             }
         });
     }
-    updateDat(b) {
+    updateDataCell(b) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
@@ -47,6 +47,20 @@ class BookingRoom {
             }
             catch (error) {
                 throw new Error("Data not update correct");
+            }
+        });
+    }
+    getRoomCell(b) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield index_1.default.connect();
+                const sql = `SELECT public.cell.room_id FROM public.cell WHERE public.cell.user_id = $1`;
+                const result = yield connection.query(sql, [b.userID]);
+                connection.release();
+                return result.rows;
+            }
+            catch (error) {
+                throw new Error("Error while Fetching Data");
             }
         });
     }

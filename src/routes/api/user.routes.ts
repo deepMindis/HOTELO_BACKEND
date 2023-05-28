@@ -8,6 +8,7 @@ const routes = Router();
 routes.post('/users/register', controllers.register);
 routes.post('/users/authenticated', controllers.authenticated);
 routes.post('/users/forgetPassword', controllers.forgetPasswordcontroller);
+routes.post('/users/updateData', controllers.updetUserData);
 
 
 export default routes;

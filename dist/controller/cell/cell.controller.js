@@ -17,12 +17,20 @@ const cell_model_1 = __importDefault(require("../../model/cell/cell.model"));
 const cellModel = new cell_model_1.default();
 const cellController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const cell = yield cellModel.addNewRoom(req.body);
-        res.json({
-            status: 0,
-            data: Object.assign({}, cell),
-            message: "Cell add correct ",
-        });
+        const str = yield cellModel.roomAtCell(req.body);
+        if (str) {
+            res.json({
+                status: 1,
+                message: "Room Already in cell with you"
+            });
+        }
+        else {
+            const cell = yield cellModel.addNewRoom(req.body);
+            res.json({
+                status: 0,
+                message: "Cell add correct ",
+            });
+        }
     }
     catch (error) {
         next(error);
@@ -32,11 +40,20 @@ exports.cellController = cellController;
 const getCellData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const cell = yield cellModel.getAllCell(req.body);
-        res.json({
-            status: 0,
-            data: cell,
-            message: "Cell fetch correct ",
-        });
+        if (cell == null) {
+            res.json({
+                status: 1,
+                data: cell,
+                message: "Not room in the Cell",
+            });
+        }
+        else {
+            res.json({
+                status: 0,
+                data: cell,
+                message: "Cell fetch correct ",
+            });
+        }
     }
     catch (error) {
         next(error);

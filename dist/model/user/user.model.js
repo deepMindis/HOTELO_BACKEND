@@ -102,5 +102,19 @@ class UserModel {
             }
         });
     }
+    updateUser(u) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield index_1.default.connect();
+                const sql = 'UPDATE public.users SET firstname=$1, lastname=$2, email=$3, phone=$4 WHERE id = $5 returning * ';
+                const result = yield connection.query(sql, [u.firstname, u.lastname, u.email, u.phone, u.id,]);
+                connection.release();
+                return result.rows[0];
+            }
+            catch (error) {
+                throw new Error("You have an error while updating data !!");
+            }
+        });
+    }
 }
 exports.default = UserModel;

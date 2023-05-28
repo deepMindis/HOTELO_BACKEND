@@ -30,6 +30,32 @@ export const register = async (
   }
 };
 
+export const updetUserData = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const check = await userModel.getusers(req.body);
+    if (check) {
+      res.json({
+        status: 1,
+        message: "The email is already exist",
+      })
+    } else {
+      const updataData = await userModel.updateUser(req.body);
+      res.json({
+        status: 0,
+        data: { ...updataData },
+        message: "Update data Successfuly"
+      })
+    }
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 export const getUser = async (
   req: Request,
   res: Response,

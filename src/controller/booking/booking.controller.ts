@@ -10,7 +10,7 @@ export const booking = async (
     try {
         const boking = await bookingModel.bookingRoom(req.body);
         if (boking) {
-            const update = await bookingModel.updateDat(req.body);
+            const update = await bookingModel.updateDataCell(req.body);
             res.json({
                 status: 0,
                 data: { ...boking },
@@ -23,6 +23,24 @@ export const booking = async (
                 message: 'Booking correct !',
             });
         }
+    } catch (error) {
+        next(error);
+    }
+};
+export const fetchData = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const fetch = await bookingModel.getRoomCell(req.body);
+
+        res.json({
+            status: 0,
+            data: fetch,
+            message: 'correct !',
+        });
+
     } catch (error) {
         next(error);
     }
