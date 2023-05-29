@@ -28,17 +28,15 @@ class Cell {
             throw new Error('The room already Booking !!');
         }
     }
-    async getAllCell(r: room): Promise<room[] | null> {
+    async getAllCell(r: room): Promise<room[]> {
         try {
             const connection = await pool.connect();
             const sql = 'SELECT * FROM public.room INNER JOIN public.cell ON public.cell.room_id = public.room.id WHERE public.cell.user_id = $1 AND public.cell.status = 0';
             const result = await connection.query(sql, [r.user_id]);
             connection.release();
-            if (result == null) {
-                return null;
-            } else {
-                return result.rows;
-            }
+
+            return result.rows;
+
         } catch (error) {
             throw new Error('Error while featching data');
         }
@@ -46,8 +44,8 @@ class Cell {
     async deleteCell(r: cell): Promise<cell[]> {
         try {
             const connection = await pool.connect();
-            const sql = 'DELETE FROM public.cell WHERE public.cell.user_id = $1 ABD public.cell.room_id = $2';
-            const result = await connection.query(sql, [r.user_id, r.room_id]);
+            const sql = 'DELETE FROM public.cell WHERE public.cell.id = $1';
+            const result = await connection.query(sql, [r.id]);
             connection.release();
             return result.rows;
         } catch (error) {

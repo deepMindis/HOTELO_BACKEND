@@ -64,5 +64,19 @@ class BookingRoom {
             }
         });
     }
+    updateRoom(c) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield index_1.default.connect();
+                const sql = 'UPDATE public.room SET roomstate = 1 WHERE public.room.id in (SELECT public.cell.room_id From public.cell WHERE public.cell.user_id = $1)';
+                const result = yield connection.query(sql, [c.user_id]);
+                connection.release();
+                return result.rows[0];
+            }
+            catch (error) {
+                throw new Error("The data not update");
+            }
+        });
+    }
 }
 exports.default = BookingRoom;

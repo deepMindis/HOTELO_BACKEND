@@ -1,6 +1,7 @@
 import Booking from '../../types/booking.types';
 import pool from '../../database/index';
 import booking from '../../types/booking.types';
+import cell from '../../types/cell.types';
 
 
 class BookingRoom {
@@ -43,6 +44,18 @@ class BookingRoom {
             return result.rows;
         } catch (error) {
             throw new Error("Error while Fetching Data");
+        }
+    }
+
+    async updateRoom(c: cell): Promise<cell> {
+        try {
+            const connection = await pool.connect();
+            const sql = 'UPDATE public.room SET roomstate = 1 WHERE public.room.id in (SELECT public.cell.room_id From public.cell WHERE public.cell.user_id = $1)';
+            const result = await connection.query(sql, [c.user_id]);
+            connection.release();
+            return result.rows[0];
+        } catch (error) {
+            throw new Error("The data not update");
         }
     }
 

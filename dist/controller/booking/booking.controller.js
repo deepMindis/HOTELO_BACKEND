@@ -20,6 +20,7 @@ const booking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         const boking = yield bookingModel.bookingRoom(req.body);
         if (boking) {
             const update = yield bookingModel.updateDataCell(req.body);
+            const updateroom = yield bookingModel.updateRoom(req.body);
             res.json({
                 status: 0,
                 data: Object.assign({}, boking),
@@ -28,9 +29,9 @@ const booking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         }
         else {
             res.json({
-                status: 2,
+                status: 1,
                 data: "something error",
-                message: 'Booking correct !',
+                message: 'Not Booking correct !',
             });
         }
     }
