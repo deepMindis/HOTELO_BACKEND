@@ -17,23 +17,12 @@ const booking_model_1 = __importDefault(require("../../model/booking/booking.mod
 const bookingModel = new booking_model_1.default();
 const booking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const boking = yield bookingModel.bookingRoom(req.body);
-        if (boking) {
-            const update = yield bookingModel.updateDataCell(req.body);
-            const updateroom = yield bookingModel.updateRoom(req.body);
-            res.json({
-                status: 0,
-                data: Object.assign({}, boking),
-                message: 'Booking correct !',
-            });
-        }
-        else {
-            res.json({
-                status: 1,
-                data: "something error",
-                message: 'Not Booking correct !',
-            });
-        }
+        const booking = bookingModel.bookingRoom(req.body);
+        res.json({
+            status: 0,
+            data: Object.assign({}, booking),
+            message: "Booking correct !"
+        });
     }
     catch (error) {
         next(error);

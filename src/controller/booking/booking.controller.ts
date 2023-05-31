@@ -8,22 +8,12 @@ export const booking = async (
     next: NextFunction
 ) => {
     try {
-        const boking = await bookingModel.bookingRoom(req.body);
-        if (boking) {
-            const update = await bookingModel.updateDataCell(req.body);
-            const updateroom = await bookingModel.updateRoom(req.body);
-            res.json({
-                status: 0,
-                data: { ...boking },
-                message: 'Booking correct !',
-            });
-        } else {
-            res.json({
-                status: 1,
-                data: "something error",
-                message: 'Not Booking correct !',
-            });
-        }
+        const booking = bookingModel.bookingRoom(req.body);
+        res.json({
+            status: 0,
+            data: { ...booking },
+            message: "Booking correct !"
+        });
     } catch (error) {
         next(error);
     }
@@ -35,7 +25,6 @@ export const fetchData = async (
 ) => {
     try {
         const fetch = await bookingModel.getRoomCell(req.body);
-
         res.json({
             status: 0,
             data: fetch,

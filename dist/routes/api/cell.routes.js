@@ -28,6 +28,6 @@ const cell = __importStar(require("../../controller/cell/cell.controller"));
 const routes = (0, express_1.Router)();
 routes.post('/cell/addnewCell', cell.cellController);
 routes.post('/cell/getAllCell', cell.getCellData);
-routes.delete('/cell/deleteFromCell', cell.deletefromCell);
+routes.post('/cell/deleteFromCell', cell.deletefromCell);
 routes.post('/cell/getTotalPrice', cell.gettotalPrice);
 exports.default = routes;

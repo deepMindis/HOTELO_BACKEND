@@ -42,14 +42,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 exports.register = register;
 const updetUserData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const check = yield userModel.getusers(req.body);
-        if (check) {
-            res.json({
-                status: 1,
-                message: "The email is already exist",
-            });
-        }
-        else {
+        {
             const updataData = yield userModel.updateUser(req.body);
             res.json({
                 status: 0,

@@ -36,13 +36,7 @@ export const updetUserData = async (
   next: NextFunction
 ) => {
   try {
-    const check = await userModel.getusers(req.body);
-    if (check) {
-      res.json({
-        status: 1,
-        message: "The email is already exist",
-      })
-    } else {
+    {
       const updataData = await userModel.updateUser(req.body);
       res.json({
         status: 0,

@@ -18,7 +18,7 @@ class BookingRoom {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
-                const sql = `INSERT INTO public.booking( bookingcheckin, bookingcheckout, total, numberadult, numberchild, paymenttype, userID) VALUES ($1, $2, $3, $4, $5, $6, $7) returning *`;
+                const sql = 'CALL public.new_update($1::date,$2::date,$3::integer,$4::integer,$5:: integer,$6:: integer,$7:: uuid)';
                 const result = yield connection.query(sql, [
                     b.bookingcheckin,
                     b.bookingcheckout,
@@ -36,20 +36,6 @@ class BookingRoom {
             }
         });
     }
-    updateDataCell(b) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const connection = yield index_1.default.connect();
-                const sql = `UPDATE public.cell SET  status = 1 WHERE public.cell.user_id = $1`;
-                const result = yield connection.query(sql, [b.userID]);
-                connection.release();
-                return result.rows;
-            }
-            catch (error) {
-                throw new Error("Data not update correct");
-            }
-        });
-    }
     getRoomCell(b) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -61,20 +47,6 @@ class BookingRoom {
             }
             catch (error) {
                 throw new Error("Error while Fetching Data");
-            }
-        });
-    }
-    updateRoom(c) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const connection = yield index_1.default.connect();
-                const sql = 'UPDATE public.room SET roomstate = 1 WHERE public.room.id in (SELECT public.cell.room_id From public.cell WHERE public.cell.user_id = $1)';
-                const result = yield connection.query(sql, [c.user_id]);
-                connection.release();
-                return result.rows[0];
-            }
-            catch (error) {
-                throw new Error("The data not update");
             }
         });
     }
