@@ -46,7 +46,7 @@ class RoomModel {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const connection = yield index_1.default.connect();
-                const sql = "SELECT nameroom , roomnumber,petfrindly,roomcoast,roomstate,room.photo,smokefrindly from public.room_type, public.room WHERE room.roomnumber::VARCHAR LIKE $%1%;";
+                const sql = `SELECT   roomnumber,petfrindly,roomcoast,roomstate,room.photo,smokefrindly from  public.room WHERE room.roomnumber::VARCHAR LIKE $1`;
                 const result = yield connection.query(sql, [r.value]);
                 connection.release();
                 return result.rows;

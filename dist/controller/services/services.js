@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addNewServices = exports.servicesModelController = void 0;
+exports.getdrinksOrder = exports.getSandwichsOrder = exports.getMealsOrder = exports.addNewServices = exports.servicesModelController = void 0;
 const services_model_1 = __importDefault(require("../../model/services/services_model"));
 const services_model = new services_model_1.default();
 const servicesModelController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -43,3 +43,45 @@ const addNewServices = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.addNewServices = addNewServices;
+const getMealsOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const getmeeals = yield services_model.getMeals();
+        res.json({
+            status: 0,
+            data: getmeeals,
+            message: "Successfuly !",
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.getMealsOrder = getMealsOrder;
+const getSandwichsOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const getsand = yield services_model.getSandwinch();
+        res.json({
+            status: 0,
+            data: getsand,
+            message: "Successfuly !",
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.getSandwichsOrder = getSandwichsOrder;
+const getdrinksOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const getderink = yield services_model.getDricks();
+        res.json({
+            status: 0,
+            data: getderink,
+            message: "Successfuly !",
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.getdrinksOrder = getdrinksOrder;

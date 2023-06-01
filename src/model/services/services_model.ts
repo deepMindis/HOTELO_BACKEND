@@ -1,6 +1,7 @@
 import Services from "../../types/services";
 import pool from "../../database";
 import order from "../../types/order_types";
+import resturant from '../../types/resturant.types';
 class ServicesModel {
     async getServices(): Promise<Services[]> {
         try {
@@ -25,6 +26,39 @@ class ServicesModel {
             ]);
             connection.release();
             return result.rows[0];
+        } catch (error) {
+            throw new Error("Error while order services !");
+        }
+    }
+    async getMeals(): Promise<resturant[]> {
+        try {
+            const connection = await pool.connect();
+            const sql = "SELECT * FROM public.resturant WHERE resturant_type_id = 'b7658996-0643-442e-91b0-0871d85e9dd5';";
+            const result = await connection.query(sql);
+            connection.release();
+            return result.rows;
+        } catch (error) {
+            throw new Error("Error while order services !");
+        }
+    }
+    async getDricks(): Promise<resturant[]> {
+        try {
+            const connection = await pool.connect();
+            const sql = "SELECT * FROM public.resturant WHERE resturant_type_id = '9e6183fb-f4aa-4f0d-9034-129a505f539f';";
+            const result = await connection.query(sql);
+            connection.release();
+            return result.rows;
+        } catch (error) {
+            throw new Error("Error while order services !");
+        }
+    }
+    async getSandwinch(): Promise<resturant[]> {
+        try {
+            const connection = await pool.connect();
+            const sql = "SELECT * FROM public.resturant WHERE resturant_type_id = 'eeefaa80-59f6-4ef7-8e57-2e722bd75c26';";
+            const result = await connection.query(sql);
+            connection.release();
+            return result.rows;
         } catch (error) {
             throw new Error("Error while order services !");
         }

@@ -35,3 +35,53 @@ export const addNewServices = async (
         next(error);
     }
 }
+
+export const getMealsOrder = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const getmeeals = await services_model.getMeals();
+        res.json({
+            status: 0,
+            data: getmeeals,
+            message: "Successfuly !",
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+export const getSandwichsOrder = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const getsand = await services_model.getSandwinch();
+        res.json({
+            status: 0,
+            data: getsand,
+            message: "Successfuly !",
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const getdrinksOrder = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const getderink = await services_model.getDricks();
+        res.json({
+            status: 0,
+            data: getderink,
+            message: "Successfuly !",
+        });
+    } catch (error) {
+        next(error);
+    }
+}

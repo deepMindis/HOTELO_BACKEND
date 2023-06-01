@@ -13,7 +13,6 @@ class RoomModel {
             throw new Error('Error while featching data');
         }
     }
-
     async getAllRooms(): Promise<Room[]> {
         try {
             const connection = await pool.connect();
@@ -28,7 +27,7 @@ class RoomModel {
     async serachRoom(r: room): Promise<Room[]> {
         try {
             const connection = await pool.connect();
-            const sql = "SELECT nameroom , roomnumber,petfrindly,roomcoast,roomstate,room.photo,smokefrindly from public.room_type, public.room WHERE room.roomnumber::VARCHAR LIKE $%1%;";
+            const sql = `SELECT   roomnumber,petfrindly,roomcoast,roomstate,room.photo,smokefrindly from  public.room WHERE room.roomnumber::VARCHAR LIKE $1`;
             const result = await connection.query(sql, [r.value]);
             connection.release();
             return result.rows;

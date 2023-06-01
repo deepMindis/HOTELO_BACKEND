@@ -45,5 +45,47 @@ class ServicesModel {
             }
         });
     }
+    getMeals() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield database_1.default.connect();
+                const sql = "SELECT * FROM public.resturant WHERE resturant_type_id = 'b7658996-0643-442e-91b0-0871d85e9dd5';";
+                const result = yield connection.query(sql);
+                connection.release();
+                return result.rows;
+            }
+            catch (error) {
+                throw new Error("Error while order services !");
+            }
+        });
+    }
+    getDricks() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield database_1.default.connect();
+                const sql = "SELECT * FROM public.resturant WHERE resturant_type_id = '9e6183fb-f4aa-4f0d-9034-129a505f539f';";
+                const result = yield connection.query(sql);
+                connection.release();
+                return result.rows;
+            }
+            catch (error) {
+                throw new Error("Error while order services !");
+            }
+        });
+    }
+    getSandwinch() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield database_1.default.connect();
+                const sql = "SELECT * FROM public.resturant WHERE resturant_type_id = 'eeefaa80-59f6-4ef7-8e57-2e722bd75c26';";
+                const result = yield connection.query(sql);
+                connection.release();
+                return result.rows;
+            }
+            catch (error) {
+                throw new Error("Error while order services !");
+            }
+        });
+    }
 }
 exports.default = ServicesModel;
