@@ -46,11 +46,20 @@ exports.fetchData = fetchData;
 const requestTime = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const requ = yield bookingModel.requestTime(req.body);
-        res.json({
-            status: 0,
-            data: requ,
-            message: 'correct !',
-        });
+        if ((requ === null || requ === void 0 ? void 0 : requ.length) === 0) {
+            res.json({
+                status: 1,
+                data: requ,
+                message: 'INCORRECT !',
+            });
+        }
+        else {
+            res.json({
+                status: 0,
+                data: requ,
+                message: 'correct !',
+            });
+        }
     }
     catch (error) {
         next(error);

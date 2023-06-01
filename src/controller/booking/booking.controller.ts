@@ -42,11 +42,17 @@ export const requestTime = async (
 ) => {
     try {
         const requ = await bookingModel.requestTime(req.body);
-        res.json({
-            status: 0,
-            data: requ,
-            message: 'correct !',
-        });
+        if (requ?.length === 0) {
+            res.json({
+                status: 1,
+                message: 'INCORRECT !',
+            });
+        } else {
+            res.json({
+                status: 0,
+                message: 'correct !',
+            });
+        }
     } catch (error) {
         next(error);
     }
