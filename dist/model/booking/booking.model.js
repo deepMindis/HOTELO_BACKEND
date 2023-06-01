@@ -50,5 +50,19 @@ class BookingRoom {
             }
         });
     }
+    requestTime(b) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield index_1.default.connect();
+                const sql = 'SELECT * FROM public.booking WHERE(booking.userid = $1 AND booking.bookingcheckin <= CURRENT_DATE AND booking.bookingcheckout >= CURRENT_DATE);';
+                const result = yield connection.query(sql, [b.userID]);
+                connection.release();
+                return result.rows;
+            }
+            catch (error) {
+                throw new Error("Time is not correct !!");
+            }
+        });
+    }
 }
 exports.default = BookingRoom;

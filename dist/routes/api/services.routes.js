@@ -27,4 +27,5 @@ const express_1 = require("express");
 const services = __importStar(require("../../controller/services/services"));
 const routes = (0, express_1.Router)();
 routes.get('/services', services.servicesModelController);
+routes.post('/services/addnewServices', services.addNewServices);
 exports.default = routes;

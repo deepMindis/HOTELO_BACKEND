@@ -28,4 +28,6 @@ const roomsT = __importStar(require("../../controller/room/room.controller"));
 const routes = (0, express_1.Router)();
 // room
 routes.post('/room/getRooms', roomsT.getRoomsByID);
+routes.get('/room/getallRooms', roomsT.getAllRooms);
+routes.post('/room/searchRoom', roomsT.searchRoom);
 exports.default = routes;

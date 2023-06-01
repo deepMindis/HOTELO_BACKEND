@@ -36,9 +36,17 @@ class BookingRoom {
             throw new Error("Error while Fetching Data");
         }
     }
-
-
-
+    async requestTime(b: booking): Promise<Booking[] | null> {
+        try {
+            const connection = await pool.connect();
+            const sql = 'SELECT * FROM public.booking WHERE(booking.userid = $1 AND booking.bookingcheckin <= CURRENT_DATE AND booking.bookingcheckout >= CURRENT_DATE);';
+            const result = await connection.query(sql, [b.userID]);
+            connection.release();
+            return result.rows;
+        } catch (error) {
+            throw new Error("Time is not correct !!");
+        }
+    }
 }
 
 export default BookingRoom;

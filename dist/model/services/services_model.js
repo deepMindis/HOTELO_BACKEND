@@ -28,5 +28,22 @@ class ServicesModel {
             }
         });
     }
+    addservices(o) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield database_1.default.connect();
+                const sql = 'INSERT INTO public."order"(user_id, "Service_ID")VALUES ($1, $2) returning *';
+                const result = yield connection.query(sql, [
+                    o.user_id,
+                    o.Service_ID,
+                ]);
+                connection.release();
+                return result.rows[0];
+            }
+            catch (error) {
+                throw new Error("Error while order services !");
+            }
+        });
+    }
 }
 exports.default = ServicesModel;

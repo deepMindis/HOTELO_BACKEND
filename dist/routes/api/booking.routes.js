@@ -28,4 +28,5 @@ const booking = __importStar(require("../../controller/booking/booking.controlle
 const routes = (0, express_1.Router)();
 routes.post('/booking/roombooking', booking.booking);
 routes.post('/booking/fetchdata', booking.fetchData);
+routes.post('/booking/requestDate', booking.requestTime);
 exports.default = routes;

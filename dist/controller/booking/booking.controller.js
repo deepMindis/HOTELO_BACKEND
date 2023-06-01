@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchData = exports.booking = void 0;
+exports.requestTime = exports.fetchData = exports.booking = void 0;
 const booking_model_1 = __importDefault(require("../../model/booking/booking.model"));
 const bookingModel = new booking_model_1.default();
 const booking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -43,3 +43,17 @@ const fetchData = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.fetchData = fetchData;
+const requestTime = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const requ = yield bookingModel.requestTime(req.body);
+        res.json({
+            status: 0,
+            data: requ,
+            message: 'correct !',
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.requestTime = requestTime;

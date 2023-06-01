@@ -28,5 +28,33 @@ class RoomModel {
             }
         });
     }
+    getAllRooms() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield index_1.default.connect();
+                const sql = 'SELECT nameroom , roomnumber,petfrindly,roomcoast,roomstate,room.photo,smokefrindly from public.room_type, public.room WHERE room.roomtypeid = room_type.id';
+                const result = yield connection.query(sql);
+                connection.release();
+                return result.rows;
+            }
+            catch (error) {
+                throw new Error('Error while Fetching Data !');
+            }
+        });
+    }
+    serachRoom(r) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const connection = yield index_1.default.connect();
+                const sql = "SELECT nameroom , roomnumber,petfrindly,roomcoast,roomstate,room.photo,smokefrindly from public.room_type, public.room WHERE room.roomnumber::VARCHAR LIKE $%1%;";
+                const result = yield connection.query(sql, [r.value]);
+                connection.release();
+                return result.rows;
+            }
+            catch (error) {
+                throw new Error('Error while featching data');
+            }
+        });
+    }
 }
 exports.default = RoomModel;

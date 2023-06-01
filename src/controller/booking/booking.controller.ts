@@ -35,3 +35,19 @@ export const fetchData = async (
         next(error);
     }
 };
+export const requestTime = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const requ = await bookingModel.requestTime(req.body);
+        res.json({
+            status: 0,
+            data: requ,
+            message: 'correct !',
+        });
+    } catch (error) {
+        next(error);
+    }
+};

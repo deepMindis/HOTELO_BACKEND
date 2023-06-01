@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRoomsByID = void 0;
+exports.searchRoom = exports.getAllRooms = exports.getRoomsByID = void 0;
 const room_model_1 = __importDefault(require("../../model/room/room.model"));
 const roomModel = new room_model_1.default();
 const getRoomsByID = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,3 +29,31 @@ const getRoomsByID = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.getRoomsByID = getRoomsByID;
+const getAllRooms = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const rooms = yield roomModel.getAllRooms();
+        res.json({
+            status: 0,
+            data: rooms,
+            message: "You get All Rooms"
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.getAllRooms = getAllRooms;
+const searchRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const rooms = yield roomModel.serachRoom(req.body);
+        res.json({
+            status: 0,
+            data: rooms,
+            message: "You get All Rooms"
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.searchRoom = searchRoom;
