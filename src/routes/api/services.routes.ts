@@ -6,4 +6,6 @@ routes.post('/services/addnewServices', services.addNewServices);
 routes.get('/services/getMeals', services.getMealsOrder);
 routes.get('/services/getSandwichs', services.getSandwichsOrder);
 routes.get('/services/getDrinks', services.getdrinksOrder);
+routes.post('/services/orderServices', services.servicesORderMake);
+routes.post('/services/resturantOrder', services.servicesrestueantMake);
 export default routes;

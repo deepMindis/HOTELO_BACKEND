@@ -85,3 +85,35 @@ export const getdrinksOrder = async (
         next(error);
     }
 }
+export const servicesORderMake = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const order = await services_model.servicesOrder(req.body);
+        res.json({
+            status: 0,
+            data: order,
+            message: "The order make  Successfuly !",
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+export const servicesrestueantMake = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const orderres = await services_model.makeResturantOrder(req.body);
+        res.json({
+            status: 0,
+            data: orderres,
+            message: "The order make  Successfuly !",
+        });
+    } catch (error) {
+        next(error);
+    }
+}

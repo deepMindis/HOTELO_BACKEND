@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getdrinksOrder = exports.getSandwichsOrder = exports.getMealsOrder = exports.addNewServices = exports.servicesModelController = void 0;
+exports.servicesrestueantMake = exports.servicesORderMake = exports.getdrinksOrder = exports.getSandwichsOrder = exports.getMealsOrder = exports.addNewServices = exports.servicesModelController = void 0;
 const services_model_1 = __importDefault(require("../../model/services/services_model"));
 const services_model = new services_model_1.default();
 const servicesModelController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -85,3 +85,31 @@ const getdrinksOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.getdrinksOrder = getdrinksOrder;
+const servicesORderMake = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const order = yield services_model.servicesOrder(req.body);
+        res.json({
+            status: 0,
+            data: order,
+            message: "The order make  Successfuly !",
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.servicesORderMake = servicesORderMake;
+const servicesrestueantMake = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const orderres = yield services_model.makeResturantOrder(req.body);
+        res.json({
+            status: 0,
+            data: orderres,
+            message: "The order make  Successfuly !",
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.servicesrestueantMake = servicesrestueantMake;
