@@ -89,24 +89,34 @@ class ServicesModel {
     }
     servicesOrder(o) {
         return __awaiter(this, void 0, void 0, function* () {
-            const connection = yield database_1.default.connect();
-            const sql = 'INSERT INTO public."order"(user_id, "Service_ID", amount,totalprice) VALUES ($1, $2, $3,$4);';
-            const result = yield connection.query(sql, [
-                o.user_id,
-                o.Service_ID,
-                o.amount,
-            ]);
-            connection.release();
-            return result.rows[0];
+            try {
+                const connection = yield database_1.default.connect();
+                const sql = 'INSERT INTO public."order"(user_id, "Service_ID", amount,totalprice) VALUES ($1, $2, $3,$4);';
+                const result = yield connection.query(sql, [
+                    o.user_id,
+                    o.Service_ID,
+                    o.amount,
+                ]);
+                connection.release();
+                return result.rows[0];
+            }
+            catch (error) {
+                throw new Error("Error while fetching data");
+            }
         });
     }
     makeResturantOrder(r) {
         return __awaiter(this, void 0, void 0, function* () {
-            const connection = yield database_1.default.connect();
-            const sql = 'INSERT INTO public.order_resturant(user_id, resturant_id, amount, totalprice)VALUES ($1, $2, $3, $4);';
-            const result = yield connection.query(sql, [r.user_id, r.resturant_id, r.amount, r.totalprice]);
-            connection.release();
-            return result.rows[0];
+            try {
+                const connection = yield database_1.default.connect();
+                const sql = 'INSERT INTO public.order_resturant(user_id, resturant_id, amount, totalprice)VALUES ($1, $2, $3, $4);';
+                const result = yield connection.query(sql, [r.user_id, r.resturant_id, r.amount, r.totalprice]);
+                connection.release();
+                return result.rows[0];
+            }
+            catch (error) {
+                throw new Error("Error While fetching data");
+            }
         });
     }
 }

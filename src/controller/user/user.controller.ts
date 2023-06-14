@@ -115,3 +115,27 @@ export const authenticated = async (
     next(error);
   }
 };
+
+export const authenticatedAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await userModel.authenticateadmin(req.body);
+    const token = jwt.sign({ user }, config.token as unknown as string);
+    if (!user) {
+      return res.status(401).json({
+        status: 1,
+        message: 'the email or password do not match please try again',
+      });
+    }
+    return res.header('Access-Control-Allow-Origin', req.headers.origin).json({
+      status: 0,
+      data: { ...user, token },
+      message: 'user authenticated successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+};

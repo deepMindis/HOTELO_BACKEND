@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticated = exports.forgetPasswordcontroller = exports.getUser = exports.updetUserData = exports.register = void 0;
+exports.authenticatedAdmin = exports.authenticated = exports.forgetPasswordcontroller = exports.getUser = exports.updetUserData = exports.register = void 0;
 const user_model_1 = __importDefault(require("../../model/user/user.model"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../../config/config"));
@@ -115,3 +115,24 @@ const authenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.authenticated = authenticated;
+const authenticatedAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield userModel.authenticateadmin(req.body);
+        const token = jsonwebtoken_1.default.sign({ user }, config_1.default.token);
+        if (!user) {
+            return res.status(401).json({
+                status: 1,
+                message: 'the email or password do not match please try again',
+            });
+        }
+        return res.header('Access-Control-Allow-Origin', req.headers.origin).json({
+            status: 0,
+            data: Object.assign(Object.assign({}, user), { token }),
+            message: 'user authenticated successfully',
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.authenticatedAdmin = authenticatedAdmin;

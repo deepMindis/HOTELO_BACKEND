@@ -13,8 +13,8 @@ class UserModel {
     try {
       // open connection
       const connection = await pool.connect();
-      const sql = `INSERT INTO public.users(firstname, lastname, email, password, phone)
-          VALUES ($1,$2, $3, $4,  $5) returning *`;
+      const sql = `INSERT INTO public.users(firstname, lastname, email, password, phone,roles)
+          VALUES ($1,$2, $3, $4,  $5,$6) returning *`;
       // run query
       const result = await connection.query(sql, [
         u.firstname,
@@ -22,6 +22,7 @@ class UserModel {
         u.email,
         hashPasswordbycrypt(u.password),
         u.phone,
+        u.roles,
       ]);
       //release connection
       connection.release();
@@ -57,6 +58,32 @@ class UserModel {
           const userInfo = await connection.query(
             'SELECT * FROM public.users WHERE email = $1',
             [email]
+          );
+          return userInfo.rows[0];
+        }
+      }
+      connection.release();
+      return null;
+    } catch (error) {
+      throw new Error('No email or password are vaild !!');
+    }
+  }
+
+  async authenticateadmin(u: User): Promise<User | null> {
+    try {
+      const connection = await pool.connect();
+      const sql = 'SELECT * FROM users WHERE email = $1 AND roles = 1';
+      const result = await connection.query(sql, [u.email]);
+      if (result.rows.length) {
+        const { password: hashPasswordbycrypt } = result.rows[0];
+        const isPasswordVaild = bcrypt.compareSync(
+          `${u.password}${config.pepper}`,
+          hashPasswordbycrypt
+        );
+        if (isPasswordVaild) {
+          const userInfo = await connection.query(
+            'SELECT * FROM public.users WHERE email = $1 AND roles = 1',
+            [u.email]
           );
           return userInfo.rows[0];
         }
